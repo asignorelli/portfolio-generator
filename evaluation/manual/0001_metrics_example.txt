@@ -1,0 +1,14 @@
+This is an example of what a manual evaluation file should look like (can be deleted once we have real data)
+(Make sure to reference the metrics.md for guidance, and store as [pair_number]_metrics.txt):
+
+PAIR: 0001
+RATER: Alyssa
+
+visual_fit (1-6): 4
+hireability (1-6): 2
+resume_fidelity (1-6): 1 
+portfolio_fidelity (1-6): 3
+natural_language (1-6): 6
+factual_accuracy (1-6): 5
+
+NOTES: This portfolio had lots of info missing

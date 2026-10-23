@@ -1,0 +1,5 @@
+This can be deleted once this file has data
+This folder should be used to store the HTML associated with a portfolio, and should be named 
+the same number as the resume it is tied to
+
+EX: resume 0001.pdf will have 0001.HTML

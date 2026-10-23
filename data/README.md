@@ -1,8 +1,13 @@
-## DATA
-This folder holds both the resumes and portfolios subfolders.
+# Data
 
-Resumes are stored as PDFs, while portfolios are stored as their source HTML
+The input data consists of resumes and their paired portfolio
 
-This is used as input to generate portfolios for evaluation (First pass), aswell as finetune our model (Second pass).
+| Folder | What it contains |
+|---|---|
+| `resumes/` | One resume PDF per person, named by sample ID (`0001.pdf`) |
+| `portfolios/` | The matching portfolio with the same ID (`0001/`) |
 
-The portfolio folder currently holds the 8 examples we will use for deliverable 2.
+## Notes
+
+- A resume and its portfolio share the same ID. Never change an ID once it's assigned.
+- To add new samples, continue numbering from the highest existing ID, or use the rename_script in the terminal to do large batches at once. id_mapping.csv stores the original names of the files.
