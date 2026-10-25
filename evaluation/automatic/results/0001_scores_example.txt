@@ -1,0 +1,15 @@
+This is an example of what an automatic evaluation file looks like (made from test HTML, can be deleted once we have real data).
+The script writes these for you as results/[pair_number]_scores.txt. Don't edit them by hand.
+
+PAIR: 0001
+REFERENCE: data/portfolios/0001.html (56 words)
+CANDIDATE: output/html/0001_output.html (64 words)
+BERTSCORE_MODEL: allenai/longformer-base-4096
+
+[ROUGE]
+rouge1: precision=0.6618 recall=0.7627 f1=0.7087
+rouge2: precision=0.4627 recall=0.5345 f1=0.4960
+rougeL: precision=0.6029 recall=0.6949 f1=0.6457
+
+[BERTScore]
+bertscore: precision=0.9180 recall=0.9368 f1=0.9273
