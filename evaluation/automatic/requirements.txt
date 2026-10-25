@@ -1,0 +1,4 @@
+beautifulsoup4
+rouge-score
+bert-score
+torch

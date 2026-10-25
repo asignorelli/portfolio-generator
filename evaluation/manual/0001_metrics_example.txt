@@ -11,4 +11,5 @@ portfolio_fidelity (1-6): 3
 natural_language (1-6): 6
 factual_accuracy (1-6): 5
 
-NOTES: This portfolio had lots of info missing
+NOTES: This portfolio had lots of info missing (no projects or awards section).
+Made-up facts: listed "Docker" under skills, which isn't on the resume.
