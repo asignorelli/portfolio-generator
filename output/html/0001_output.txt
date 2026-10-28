@@ -1,5 +1,0 @@
-This is a placeholder that can be deleted once we have real data
-
-Output files should be stored as :
-
-[pair_number]_output.html
