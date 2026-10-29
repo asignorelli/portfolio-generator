@@ -1,0 +1,14 @@
+PAIR: 0008
+RATER: Aidan
+
+visual_fit (1-6): 6
+hireability (1-6): 5
+resume_fidelity (1-6): 6
+portfolio_fidelity (1-6): 5
+natural_language (1-6): 6
+factual_accuracy (1-6): 6
+
+NOTES: Terminal-style theme (zsh window, ./about nav, monospace accents) that suits someone who builds CLI tools and coding agents. Polished and works well on phone. Every resume section is there, including all coursework, both jobs and all 3 projects.
+Experience and projects are written as full first-person paragraphs.
+Overlaps closely with the real portfolio: Postal, Food Truck Finder, Pokedex, A Better Way PAC and the same tech stack. Missing the Kiln static site generator project (not on the resume); adds Acme Markets and coursework that the real site doesn't show. Hireability is strong for a student/intern applicant.
+Made-up facts: none found. Source and live-site links use [INSERT ... LINK HERE] placeholders, and GitHub/LinkedIn/website come from the resume.

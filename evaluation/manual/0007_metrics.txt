@@ -1,0 +1,14 @@
+PAIR: 0007
+RATER: Aidan
+
+visual_fit (1-6): 4
+hireability (1-6): 5
+resume_fidelity (1-6): 6
+portfolio_fidelity (1-6): 3
+natural_language (1-6): 6
+factual_accuracy (1-6): 5
+
+NOTES: Dark theme with a lime/purple gradient headline, typewriter text and stat cards. It looks good on desktop and fits a product/AI engineer, but on phone the hero section (headline, buttons, stat cards) has no side padding and sits right against the screen edge, while the sections below are padded correctly.
+Every resume section is there (all 4 jobs, Divedash/Almada/Influencerbit, achievements, skills, IIT Jodhpur). Experience is written as first-person paragraphs.
+The real portfolio is built around his current agent work (fetchbean, niahere, aijobsdesk, Tinkerers Labs) and 80 blog posts, none of which is on the resume. It does overlap on Kay.ai insurance AI, Dreamboat, EngageBud 13M users / $100K, and Profilebud's Go server.
+Made-up facts (small): Medium link built as medium.com/@onlyoneaman from the resume's handle (the resume gives no URL), Kay.ai job location given as Bengaluru (resume only gives his home city), and small embellishments like Divedash helping you "get to a good prompt faster".

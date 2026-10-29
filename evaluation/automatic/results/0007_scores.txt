@@ -1,0 +1,12 @@
+PAIR: 0007
+REFERENCE: data/portfolios/0007.html (409 words)
+CANDIDATE: output/html/0007_output.html (795 words)
+BERTSCORE_MODEL: allenai/longformer-base-4096
+
+[ROUGE]
+rouge1: precision=0.2327 recall=0.4476 f1=0.3062
+rouge2: precision=0.0421 recall=0.0811 f1=0.0555
+rougeL: precision=0.0916 recall=0.1762 f1=0.1205
+
+[BERTScore]
+bertscore: precision=0.8300 recall=0.8489 f1=0.8394
