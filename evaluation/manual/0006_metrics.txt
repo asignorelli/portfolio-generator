@@ -8,7 +8,4 @@ portfolio_fidelity (1-6): 2
 natural_language (1-6): 6
 factual_accuracy (1-6): 5
 
-NOTES: Dark theme with an orange accent and a code-snippet hero. Polished, fits a senior full-stack engineer, and responsive on phone. Every resume section is covered (summary, all 3 jobs, full skills incl. blockchain and testing, degree, contact).
-Experience is written as full first-person paragraphs, not bullets.
-The real portfolio is a minimal homepage focused on AI/blockchain with two projects (Flamingo ChatBot, SWOM home swap), two blog posts, "8 years" of experience and EST availability. None of that is on the resume, so the output has almost no overlap with it beyond name, role, blockchain and email.
-Made-up facts (small): "optimized the routing algorithm" (resume just says "the algorithm"), "which I really enjoyed" about mentoring, and the Scuti "real-estate platform" card folds in the external-partner integrations bullet, which the resume lists separately.
+NOTES: A polished dark-theme portfolio that covers the full resume in first-person paragraphs, but it barely overlaps with the real AI/blockchain-focused portfolio and adds a few small made-up details.
