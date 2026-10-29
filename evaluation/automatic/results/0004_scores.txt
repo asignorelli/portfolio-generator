@@ -1,0 +1,15 @@
+PAIR: 0004
+REFERENCE: data/portfolios/0004.html (7104 words)
+CANDIDATE: output/html/0004_output.html (752 words)
+BERTSCORE_MODEL: allenai/longformer-base-4096
+
+[ROUGE]
+rouge1: precision=0.7345 recall=0.0719 f1=0.1311
+rouge2: precision=0.3152 recall=0.0308 f1=0.0562
+rougeL: precision=0.2733 recall=0.0268 f1=0.0488
+
+[BERTScore]
+bertscore: precision=0.8210 recall=0.7956 f1=0.8081
+
+WARNINGS:
+- Reference is 19729 tokens; BERTScore only reads the first 4096.
