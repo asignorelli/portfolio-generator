@@ -8,7 +8,4 @@ portfolio_fidelity (1-6): 4
 natural_language (1-6): 4
 factual_accuracy (1-6): 6
 
-NOTES: Dark developer theme with a code-snippet hero and stat cards. Clean, fits a full-stack engineer, and works on desktop and phone, though it's a fairly generic dev-portfolio look. Every resume section is there (all 3 jobs with every bullet, 3 projects, full skills list, BCA, both certifications).
-The about section is real conversational writing, but the experience section is still bullet lists. The bullets were just rewritten to start with "I", and skills are tag lists.
-The real portfolio focuses on brand product pages he built (Noise Airwave Max, Master Buds, FIKN, Lumineve) that the resume doesn't detail, so those are missing. The job timeline (Helium, Vaionex, Cloudstok) overlaps.
-Made-up facts: none found. Project links use [INSERT ... LINK HERE] placeholders, and GitHub/LinkedIn come from the resume.
+NOTES: A clean, responsive portfolio that covers the full resume, but the experience and skills sections are still plain lists and the brand product pages are missing.
