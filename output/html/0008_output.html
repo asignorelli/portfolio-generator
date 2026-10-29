@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Andre Nunes da Silva — Software Engineer</title>
+<meta name="description" content="Portfolio of Andre Nunes da Silva, Software Engineering student at Drexel University building CLI tools, coding agents, and web apps.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1117;
+    --bg-2: #121821;
+    --panel: #161d27;
+    --panel-2: #1b2430;
+    --border: #263241;
+    --text: #e6edf3;
+    --muted: #9aa7b6;
+    --dim: #6b7a8c;
+    --green: #4ade80;
+    --cyan: #38bdf8;
+    --amber: #fbbf24;
+    --pink: #f472b6;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --radius: 12px;
+    --max: 1080px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+  .mono { font-family: var(--mono); }
+  .placeholder { color: var(--amber); font-family: var(--mono); font-size: 0.85em; }
+
+  /* NAV */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(13,17,23,0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .brand { font-family: var(--mono); font-weight: 700; color: var(--text); font-size: 1rem; }
+  .brand span { color: var(--green); }
+  .brand:hover { text-decoration: none; }
+  .nav-links { display: flex; gap: 26px; list-style: none; }
+  .nav-links a { color: var(--muted); font-family: var(--mono); font-size: 0.85rem; }
+  .nav-links a:hover { color: var(--green); text-decoration: none; }
+  .nav-links a::before { content: "./"; color: var(--dim); }
+  .menu-btn {
+    display: none; background: none; border: 1px solid var(--border); color: var(--text);
+    border-radius: 8px; padding: 6px 10px; font-family: var(--mono); font-size: 0.85rem; cursor: pointer;
+  }
+
+  /* HERO */
+  .hero { padding: 90px 0 70px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: center; }
+  .eyebrow { font-family: var(--mono); color: var(--green); font-size: 0.9rem; margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(2.2rem, 5.5vw, 3.6rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 18px; }
+  .hero h1 .grad {
+    background: linear-gradient(90deg, var(--green), var(--cyan));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { color: var(--muted); font-size: 1.12rem; max-width: 34em; margin-bottom: 30px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 10px; font-family: var(--mono); font-size: 0.88rem; font-weight: 500;
+    border: 1px solid var(--border); color: var(--text); background: var(--panel);
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--cyan); }
+  .btn.primary { background: var(--green); color: #06210f; border-color: var(--green); font-weight: 700; }
+  .btn.primary:hover { border-color: var(--green); }
+
+  /* Terminal window */
+  .terminal {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius);
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(74,222,128,0.04);
+    overflow: hidden;
+  }
+  .term-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: var(--panel-2); border-bottom: 1px solid var(--border); }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.r { background: #ff5f57; } .dot.y { background: #febc2e; } .dot.g { background: #28c840; }
+  .term-title { margin-left: 8px; font-family: var(--mono); font-size: 0.78rem; color: var(--dim); }
+  .term-body { padding: 20px 20px 24px; font-family: var(--mono); font-size: 0.86rem; line-height: 1.85; min-height: 270px; }
+  .term-body .p { color: var(--green); }
+  .term-body .c { color: var(--text); }
+  .term-body .o { color: var(--muted); }
+  .term-body .k { color: var(--cyan); }
+  .cursor { display: inline-block; width: 8px; height: 1.05em; background: var(--green); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .avatar {
+    width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center;
+    font-family: var(--mono); font-weight: 700; font-size: 1.4rem; color: #06210f;
+    background: linear-gradient(135deg, var(--green), var(--cyan));
+    margin-bottom: 22px;
+    box-shadow: 0 10px 30px -10px rgba(56,189,248,0.5);
+  }
+
+  /* SECTIONS */
+  section { padding: 70px 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 34px; }
+  .sec-head .num { font-family: var(--mono); color: var(--green); font-size: 0.95rem; }
+  .sec-head h2 { font-size: clamp(1.6rem, 3.5vw, 2.1rem); letter-spacing: -0.01em; }
+  .sec-head .line { flex: 1; height: 1px; background: var(--border); transform: translateY(-6px); }
+
+  .about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 40px; align-items: start; }
+  .about-grid p { color: var(--muted); margin-bottom: 16px; }
+  .about-grid p strong { color: var(--text); font-weight: 600; }
+  .facts { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; font-family: var(--mono); font-size: 0.85rem; }
+  .facts div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px dashed var(--border); }
+  .facts div:last-child { border-bottom: none; }
+  .facts .key { color: var(--dim); }
+  .facts .val { color: var(--text); text-align: right; }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before { content: ""; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--green), var(--cyan), transparent); }
+  .job { position: relative; margin-bottom: 30px; }
+  .job::before {
+    content: ""; position: absolute; left: -28px; top: 26px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--green);
+  }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px 26px;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .card:hover { border-color: rgba(74,222,128,0.45); }
+  .job-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 4px; }
+  .job h3 { font-size: 1.15rem; }
+  .date { font-family: var(--mono); font-size: 0.8rem; color: var(--green); white-space: nowrap; }
+  .org { color: var(--cyan); font-family: var(--mono); font-size: 0.86rem; margin-bottom: 14px; }
+  .card p { color: var(--muted); margin-bottom: 12px; }
+  .card p:last-child { margin-bottom: 0; }
+  .badge { display: inline-block; font-family: var(--mono); font-size: 0.7rem; padding: 2px 8px; border-radius: 999px; background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.3); margin-left: 8px; vertical-align: middle; }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+  .project { display: flex; flex-direction: column; }
+  .project-icon {
+    font-family: var(--mono); font-weight: 700; font-size: 0.85rem; width: 44px; height: 44px; border-radius: 10px;
+    display: grid; place-items: center; margin-bottom: 16px; border: 1px solid var(--border);
+  }
+  .pi-1 { color: var(--green); background: rgba(74,222,128,0.08); }
+  .pi-2 { color: var(--cyan); background: rgba(56,189,248,0.08); }
+  .pi-3 { color: var(--amber); background: rgba(251,191,36,0.08); }
+  .project h3 { font-size: 1.2rem; margin-bottom: 2px; }
+  .project .date { display: block; margin-bottom: 14px; color: var(--dim); }
+  .project p { font-size: 0.97rem; }
+  .stat { color: var(--text); font-weight: 600; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0 18px; }
+  .tag { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); background: var(--bg-2); border: 1px solid var(--border); padding: 3px 9px; border-radius: 6px; }
+  .proj-links { margin-top: auto; display: flex; flex-direction: column; gap: 6px; padding-top: 14px; border-top: 1px dashed var(--border); font-family: var(--mono); font-size: 0.8rem; }
+  .proj-links .lbl { color: var(--dim); }
+
+  /* Education */
+  .edu-card { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: start; }
+  .edu-mark {
+    width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center;
+    font-family: var(--mono); font-weight: 700; color: var(--cyan); background: rgba(56,189,248,0.1); border: 1px solid rgba(56,189,248,0.3);
+  }
+  .course-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+  .skills-grid h3 { font-family: var(--mono); font-size: 0.9rem; color: var(--green); margin-bottom: 14px; font-weight: 500; }
+  .skills-grid h3::before { content: "$ "; color: var(--dim); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 0.8rem; padding: 6px 12px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--border); color: var(--text);
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .chip:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* Contact */
+  .contact { text-align: center; }
+  .contact .card { max-width: 720px; margin: 0 auto; padding: 44px 30px; }
+  .contact h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin-bottom: 14px; }
+  .contact p { max-width: 34em; margin: 0 auto 26px; }
+  .contact .cta { justify-content: center; }
+  .contact-list { margin-top: 28px; display: grid; gap: 8px; font-family: var(--mono); font-size: 0.86rem; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 0.8rem; color: var(--dim); position: relative; z-index: 1; }
+
+  /* Reveal (content stays visible without JS) */
+  .js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+  .js .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .js .reveal { opacity: 1; transform: none; transition: none; }
+    .cursor { animation: none; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 880px) {
+    .hero-grid, .about-grid { grid-template-columns: 1fr; }
+    .hero { padding: 60px 0 40px; }
+  }
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    .menu-btn { display: block; }
+    .nav-links {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--border);
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li a { display: block; padding: 14px 20px; border-top: 1px solid var(--border); }
+    section { padding: 52px 0; }
+    .card { padding: 20px; }
+    .term-body { font-size: 0.78rem; min-height: 240px; }
+    .edu-card { grid-template-columns: 1fr; }
+    .projects { grid-template-columns: 1fr; }
+    .facts div { flex-direction: column; gap: 2px; }
+    .facts .val { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">andre<span>@</span>silva:~$</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="navLinks">menu</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">about</a></li>
+      <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#education">education</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="avatar" aria-hidden="true">AS</div>
+        <p class="eyebrow">// hi there, I'm</p>
+        <h1>Andre Nunes da Silva.<br><span class="grad">I build tools that live in the terminal and on the web.</span></h1>
+        <p class="lead">I'm a Software Engineering student at Drexel University, currently leading frontend work for A Better Way PAC and building open-source developer tools like Postal, a Python coding agent with 5,000+ downloads on PyPI.</p>
+        <div class="cta">
+          <a class="btn primary" href="#projects">view my projects →</a>
+          <a class="btn" href="mailto:an3243@drexel.edu">get in touch</a>
+        </div>
+      </div>
+
+      <div class="terminal" aria-label="Terminal-style introduction">
+        <div class="term-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="term-title">~/andre — zsh</span>
+        </div>
+        <div class="term-body" id="term">
+          <div><span class="p">$</span> <span class="c">whoami</span></div>
+          <div class="o">andre nunes da silva — software engineering @ drexel</div>
+          <div><span class="p">$</span> <span class="c">cat focus.txt</span></div>
+          <div class="o">coding agents · CLIs · full-stack web</div>
+          <div><span class="p">$</span> <span class="c">pip show postal</span></div>
+          <div class="o"><span class="k">downloads:</span> 5,000+</div>
+          <div><span class="p">$</span> <span class="cursor"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="num">01.</span><h2>About me</h2><span class="line"></span></div>
+      <div class="about-grid">
+        <div class="reveal">
+          <p>I'm studying <strong>Software Engineering at Drexel University</strong> in Philadelphia, with a minor in <strong>AI &amp; Machine Learning</strong>, and I'm on track to graduate in June 2030. Most of what I build sits somewhere between developer tooling and the web.</p>
+          <p>On the tooling side, I've built <strong>Postal</strong>, a Python CLI coding agent that can stream responses, call tools, and hand work off to sub-agents, and a <strong>Go Pokedex CLI</strong> with its own concurrent caching layer. On the web side, I'm currently the <strong>Lead Frontend Engineer at A Better Way PAC</strong>, where I'm moving their site off Squarespace onto a custom HTML, CSS, JavaScript, and FastAPI stack.</p>
+          <p>I like working in Python and Go, I'm comfortable across the stack with Flask, FastAPI, and SQL databases, and I've had plenty of practice working on teams, from Scrum sprints on a five-person app to coordinating a ten-person content team.</p>
+        </div>
+        <div class="facts reveal">
+          <div><span class="key">based in</span><span class="val">Philadelphia, PA</span></div>
+          <div><span class="key">school</span><span class="val">Drexel University</span></div>
+          <div><span class="key">major</span><span class="val">Software Engineering</span></div>
+          <div><span class="key">minor</span><span class="val">AI &amp; Machine Learning</span></div>
+          <div><span class="key">graduating</span><span class="val">June 2030 (expected)</span></div>
+          <div><span class="key">currently</span><span class="val">Lead Frontend Engineer</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="num">02.</span><h2>Experience</h2><span class="line"></span></div>
+      <div class="timeline">
+        <article class="job reveal">
+          <div class="card">
+            <div class="job-top">
+              <h3>Lead Frontend Engineer <span class="badge">current</span></h3>
+              <span class="date">Aug 2026 – Present</span>
+            </div>
+            <div class="org">A Better Way PAC · Philadelphia, PA</div>
+            <p>I'm leading the migration of four pages from Squarespace to a custom HTML, CSS, and JavaScript frontend backed by FastAPI with a SendGrid integration. So far that move has cut load times by 30% and saves the organization $360 a year in platform costs.</p>
+            <p>I also direct a 10-person content and information team, coordinating website updates and keeping styling consistent with responsive layouts built on CSS media queries.</p>
+            <p>Using Figma prototypes as a guide, I implemented semantic HTML, responsive navigation, and standardized metadata across the four key pages to make the site more accessible and its SEO more consistent.</p>
+          </div>
+        </article>
+
+        <article class="job reveal">
+          <div class="card">
+            <div class="job-top">
+              <h3>Associate Clerk</h3>
+              <span class="date">Jan 2024 – Feb 2025</span>
+            </div>
+            <div class="org">Acme Markets · Philadelphia, PA</div>
+            <p>I prepared more than 10 online grocery orders an hour, refining how I picked and packed items to bring order-preparation time down.</p>
+            <p>I also worked the customer support hotline, handling refunds, cancellations, substitutions, and order corrections so orders went out on time and arrived right.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="num">03.</span><h2>Projects</h2><span class="line"></span></div>
+      <div class="projects">
+        <article class="card project reveal">
+          <div class="project-icon pi-1">&gt;_</div>
+          <h3>Postal</h3>
+          <span class="date">Jun 2026 – Oct 2026</span>
+          <p>Postal is a Python CLI coding agent I engineered with an object-oriented architecture, streamed model responses, syntax-highlighted output, and an interactive prompt loop. I published it to PyPI, where it's passed <span class="stat">5,000+ downloads</span>.</p>
+          <p>Its tool-calling system handles file I/O, shell operations, and web search, delegates tasks across 5+ sub-agents, and keeps persistent memory, so long sessions need less manual hand-holding. It's open source and built to be modular, maintainable, and easy to customize.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Docker</span><span class="tag">Rich</span><span class="tag">Pydantic</span></div>
+          <div class="proj-links">
+            <div><span class="lbl">source:</span> <span class="placeholder">[INSERT POSTAL SOURCE CODE LINK HERE]</span></div>
+          </div>
+        </article>
+
+        <article class="card project reveal">
+          <div class="project-icon pi-2">Go</div>
+          <h3>Pokedex</h3>
+          <span class="date">Sep 2026 – Oct 2026</span>
+          <p>A Go command-line app that talks to PokeAPI through <span class="stat">9 commands</span>, letting you explore locations, capture Pokemon, and inspect the ones you've caught.</p>
+          <p>Under the hood, I built a mutex-protected cache that expires entries automatically using goroutines, which cuts down on redundant API calls for repeated queries. The CLI also keeps persistent state and handles paginated navigation through locations and your captured Pokemon.</p>
+          <div class="tags"><span class="tag">Go</span><span class="tag">RESTful APIs</span></div>
+          <div class="proj-links">
+            <div><span class="lbl">source:</span> <span class="placeholder">[INSERT POKEDEX SOURCE CODE LINK HERE]</span></div>
+          </div>
+        </article>
+
+        <article class="card project reveal">
+          <div class="project-icon pi-3">FT</div>
+          <h3>Food Truck Finder</h3>
+          <span class="date">Jan 2026 – Jun 2026</span>
+          <p>As a full-stack developer on a 5-person team, I helped build and deploy an app for discovering food trucks around Drexel. I worked on backend routes, relational models, and the frontend UI/UX, and we ran the project with Agile/Scrum across <span class="stat">5 sprints</span>.</p>
+          <p>I developed RESTful endpoints and SQLAlchemy models for a 1–5 star review and favorites system, complete with server-side validation and automatic rating aggregation. The app tracks <span class="stat">17 Drexel-area food trucks</span> with their schedules, locations, reviews, and favorites all in one place.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLAlchemy</span></div>
+          <div class="proj-links">
+            <div><span class="lbl">source:</span> <span class="placeholder">[INSERT FOOD TRUCK FINDER SOURCE CODE LINK HERE]</span></div>
+            <div><span class="lbl">live:</span> <span class="placeholder">[INSERT FOOD TRUCK FINDER LIVE SITE LINK HERE]</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="num">04.</span><h2>Education</h2><span class="line"></span></div>
+      <div class="card edu-card reveal">
+        <div class="edu-mark" aria-hidden="true">DU</div>
+        <div>
+          <div class="job-top">
+            <h3>Drexel University</h3>
+            <span class="date">Expected Jun 2030</span>
+          </div>
+          <div class="org">Philadelphia, PA</div>
+          <p>I'm working toward a Bachelor of Science in Software Engineering with a minor in AI &amp; Machine Learning. My coursework so far has covered everything from programming fundamentals and calculus to requirements engineering and software development practice.</p>
+          <div class="course-list">
+            <span class="tag">Software Engineering &amp; Development</span>
+            <span class="tag">Advanced Programming Tools &amp; Techniques</span>
+            <span class="tag">Requirements Engineering</span>
+            <span class="tag">Computer Programming I–II</span>
+            <span class="tag">Computing and Informatics Design I–III</span>
+            <span class="tag">Calculus I–II</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="num">05.</span><h2>Skills</h2><span class="line"></span></div>
+      <div class="skills-grid">
+        <div class="card reveal">
+          <h3>languages</h3>
+          <div class="chips">
+            <span class="chip">Python</span><span class="chip">Go</span><span class="chip">C</span><span class="chip">Java</span>
+            <span class="chip">JavaScript</span><span class="chip">SQL</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Bash</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>developer-tools</h3>
+          <div class="chips">
+            <span class="chip">Git</span><span class="chip">GitHub Actions</span><span class="chip">Linux</span>
+            <span class="chip">Docker</span><span class="chip">CI/CD</span><span class="chip">Figma</span>
+          </div>
+        </div>
+        <div class="card reveal">
+          <h3>libraries-frameworks</h3>
+          <div class="chips">
+            <span class="chip">Flask</span><span class="chip">FastAPI</span><span class="chip">SQLAlchemy</span><span class="chip">SQLite</span>
+            <span class="chip">PostgreSQL</span><span class="chip">pytest</span><span class="chip">OpenAI API</span><span class="chip">Pydantic</span><span class="chip">Jinja</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <div class="card reveal">
+        <p class="eyebrow">// 06. what's next?</p>
+        <h2>Let's build something.</h2>
+        <p style="color: var(--muted);">Whether you want to talk about a project, an opportunity, or just compare notes on coding agents and CLI tools, I'd be glad to hear from you. Email is the best way to reach me.</p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:an3243@drexel.edu">say hello</a>
+          <a class="btn" href="https://github.com/andrefetch" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="https://linkedin.com/in/andre-nunes-da-silva" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+        <div class="contact-list">
+          <div>email · <a href="mailto:an3243@drexel.edu">an3243@drexel.edu</a></div>
+          <div>phone · <a href="tel:+12675880908">267-588-0908</a></div>
+          <div>web · <a href="https://andresilva.tech" target="_blank" rel="noopener">andresilva.tech</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Andre Nunes da Silva · Philadelphia, PA</div>
+</footer>
+
+<script>
+  document.documentElement.classList.add('js');
+
+  // Mobile menu
+  (function () {
+    var btn = document.getElementById('menuBtn');
+    var links = document.getElementById('navLinks');
+    btn.addEventListener('click', function () {
+      var open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.textContent = open ? 'close' : 'menu';
+    });
+    links.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        links.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.textContent = 'menu';
+      });
+    });
+  })();
+
+  // Scroll reveal
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+
+  // Typing animation for the terminal (static content stays if JS is off)
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var term = document.getElementById('term');
+    var lines = Array.prototype.slice.call(term.children);
+    var last = lines.pop(); // prompt with cursor
+    var data = lines.map(function (l) { return l.innerHTML; });
+    lines.forEach(function (l) { l.innerHTML = ''; l.style.minHeight = '1.85em'; });
+    last.style.visibility = 'hidden';
+
+    var i = 0;
+    function next() {
+      if (i >= lines.length) { last.style.visibility = 'visible'; return; }
+      var line = lines[i], html = data[i];
+      var isCmd = html.indexOf('class="p"') !== -1;
+      if (!isCmd) { line.innerHTML = html; i++; setTimeout(next, 220); return; }
+      var tmp = document.createElement('div'); tmp.innerHTML = html;
+      var cmd = tmp.querySelector('.c').textContent;
+      var n = 0;
+      (function type() {
+        line.innerHTML = '<span class="p">$</span> <span class="c">' + cmd.slice(0, n) + '</span><span class="cursor"></span>';
+        if (n < cmd.length) { n++; setTimeout(type, 45 + Math.random() * 40); }
+        else { setTimeout(function () { line.innerHTML = html; i++; next(); }, 260); }
+      })();
+    }
+    setTimeout(next, 400);
+  })();
+</script>
+</body>
+</html>

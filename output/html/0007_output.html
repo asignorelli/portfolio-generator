@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aman Kumar — Founding Product Engineer</title>
+<meta name="description" content="Aman Kumar, founding product engineer building B2B SaaS and AI-powered products.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0d10;
+    --bg-2: #13151a;
+    --card: #171a20;
+    --line: #262a33;
+    --text: #e9ebef;
+    --muted: #9aa1ad;
+    --accent: #c6f432;
+    --accent-2: #7c6cff;
+    --accent-ink: #0c0d10;
+    --radius: 16px;
+    --sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  [data-theme="light"] {
+    --bg: #f6f5f0;
+    --bg-2: #eeece4;
+    --card: #ffffff;
+    --line: #dddad0;
+    --text: #15171c;
+    --muted: #5d6370;
+    --accent: #5a7d00;
+    --accent-2: #5b4be0;
+    --accent-ink: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    transition: background .3s, color .3s;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--accent); color: var(--accent-ink); }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* Background grid */
+  .grid-bg {
+    position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 56px 56px;
+    opacity: .35;
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 70%);
+  }
+
+  /* Nav */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--bg) 78%, transparent);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; font-weight: 700; letter-spacing: -.02em;
+  }
+  .logo-mark {
+    width: 34px; height: 34px; border-radius: 10px;
+    display: grid; place-items: center;
+    background: var(--accent); color: var(--accent-ink);
+    font-family: var(--mono); font-size: 14px; font-weight: 600;
+  }
+  .nav-links { display: flex; gap: 26px; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--muted); font-size: 14px;
+    font-family: var(--mono); transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-actions { display: flex; gap: 8px; align-items: center; }
+  .icon-btn {
+    background: var(--card); border: 1px solid var(--line); color: var(--text);
+    width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+    display: grid; place-items: center; font-size: 16px;
+  }
+  .menu-btn { display: none; }
+
+  /* Hero */
+  .hero { padding: 110px 0 80px; }
+  .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 13px; color: var(--muted);
+    border: 1px solid var(--line); background: var(--card);
+    padding: 6px 12px; border-radius: 999px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 0%, transparent); } }
+  .hero h1 {
+    font-size: clamp(42px, 7.5vw, 88px);
+    line-height: 1.02; letter-spacing: -.045em; font-weight: 700;
+    margin: 28px 0 24px;
+  }
+  .hero h1 .hl {
+    background: linear-gradient(100deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .hero p.lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 640px; }
+  .typed { font-family: var(--mono); color: var(--text); }
+  .caret { display: inline-block; width: 9px; height: 1.1em; background: var(--accent); vertical-align: -3px; margin-left: 2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 22px; border-radius: 12px; text-decoration: none;
+    font-weight: 600; font-size: 15px; transition: transform .2s, background .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-ghost { border: 1px solid var(--line); background: var(--card); }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line);
+    border-radius: var(--radius); overflow: hidden; margin-top: 72px;
+  }
+  .stat { background: var(--bg-2); padding: 24px; }
+  .stat b { display: block; font-size: clamp(26px, 3.4vw, 36px); letter-spacing: -.03em; }
+  .stat span { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+
+  /* Sections */
+  section { padding: 90px 0; }
+  .sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 40px; }
+  .sec-num { font-family: var(--mono); color: var(--accent); font-size: 14px; }
+  .sec-head h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -.03em; }
+  .sec-head .rule { flex: 1; height: 1px; background: var(--line); }
+
+  /* About */
+  .about { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: start; }
+  .about p { color: var(--muted); font-size: 17px; margin-bottom: 18px; }
+  .about p strong { color: var(--text); font-weight: 600; }
+  .avatar-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px; position: relative; overflow: hidden;
+  }
+  .avatar {
+    width: 120px; height: 120px; border-radius: 28px;
+    background: conic-gradient(from 200deg, var(--accent), var(--accent-2), var(--accent));
+    display: grid; place-items: center; margin-bottom: 22px;
+    font-size: 44px; font-weight: 700; color: var(--accent-ink); letter-spacing: -.04em;
+  }
+  .facts { list-style: none; font-family: var(--mono); font-size: 13.5px; }
+  .facts li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px dashed var(--line); }
+  .facts li span:first-child { color: var(--muted); }
+  .facts li span:last-child { text-align: right; }
+
+  /* Timeline */
+  .timeline { position: relative; }
+  .job {
+    display: grid; grid-template-columns: 200px 1fr; gap: 32px;
+    padding: 32px 0; border-top: 1px solid var(--line);
+  }
+  .job:last-child { border-bottom: 1px solid var(--line); }
+  .job-meta { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .job-meta .when { color: var(--text); display: block; margin-bottom: 6px; }
+  .job h3 { font-size: 22px; letter-spacing: -.02em; }
+  .job h3 .co { color: var(--accent); }
+  .job .role { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .job p { color: var(--muted); margin-bottom: 12px; }
+  .job p strong { color: var(--text); font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    font-family: var(--mono); font-size: 12px;
+    padding: 5px 10px; border-radius: 8px;
+    background: var(--bg-2); border: 1px solid var(--line); color: var(--text);
+  }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .proj {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 26px; display: flex; flex-direction: column; gap: 12px;
+    transition: transform .25s, border-color .25s;
+    position: relative; overflow: hidden;
+  }
+  .proj::after {
+    content: ""; position: absolute; inset: auto -40% -60% auto; width: 220px; height: 220px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent-2) 30%, transparent), transparent 70%);
+    opacity: 0; transition: opacity .3s; pointer-events: none;
+  }
+  .proj:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+  .proj:hover::after { opacity: 1; }
+  .proj-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: grid; place-items: center; font-family: var(--mono); font-weight: 600;
+    background: color-mix(in srgb, var(--accent) 15%, var(--bg-2)); color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  }
+  .proj .kicker { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .proj h3 { font-size: 20px; letter-spacing: -.02em; }
+  .proj p { color: var(--muted); font-size: 15px; flex: 1; }
+  .proj .link { font-family: var(--mono); font-size: 12.5px; color: var(--accent); text-decoration: none; word-break: break-word; }
+
+  /* Achievements */
+  .wins { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .win {
+    padding: 28px; border-radius: var(--radius);
+    background: linear-gradient(160deg, var(--card), var(--bg-2));
+    border: 1px solid var(--line);
+  }
+  .win .big { font-size: 40px; font-weight: 700; letter-spacing: -.04em; color: var(--accent); line-height: 1.1; }
+  .win p { color: var(--muted); margin-top: 10px; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .skill-group { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .skill-group h4 { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 500; margin-bottom: 14px; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* Education */
+  .edu {
+    display: flex; gap: 28px; align-items: center; flex-wrap: wrap;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px;
+  }
+  .edu-badge {
+    width: 84px; height: 84px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center; font-family: var(--mono); font-weight: 600;
+    border: 2px solid var(--accent); color: var(--accent); font-size: 18px;
+  }
+  .edu h3 { font-size: 24px; letter-spacing: -.02em; }
+  .edu p { color: var(--muted); }
+
+  /* Contact */
+  .contact {
+    text-align: center; padding: 72px 28px; border-radius: 24px;
+    background:
+      radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%),
+      radial-gradient(circle at 90% 100%, color-mix(in srgb, var(--accent-2) 22%, transparent), transparent 55%),
+      var(--card);
+    border: 1px solid var(--line);
+  }
+  .contact h2 { font-size: clamp(30px, 5vw, 54px); letter-spacing: -.04em; line-height: 1.1; margin-bottom: 16px; }
+  .contact p { color: var(--muted); max-width: 540px; margin: 0 auto 32px; font-size: 17px; }
+  .contact .cta { justify-content: center; margin-top: 0; }
+  .socials { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .socials a {
+    font-family: var(--mono); font-size: 13px; text-decoration: none;
+    padding: 8px 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-2);
+    transition: border-color .2s;
+  }
+  .socials a:hover { border-color: var(--accent); }
+
+  footer { padding: 40px 0; text-align: center; color: var(--muted); font-family: var(--mono); font-size: 13px; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  .no-js .reveal { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .caret, .dot { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .projects, .wins { grid-template-columns: 1fr 1fr; }
+    .about { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 720px) {
+    .wrap { padding: 0 16px; }
+    .menu-btn { display: grid; }
+    .nav-links {
+      position: absolute; top: 64px; left: 0; right: 0;
+      flex-direction: column; gap: 0; align-items: stretch;
+      background: var(--bg); border-bottom: 1px solid var(--line);
+      max-height: 0; overflow: hidden; transition: max-height .3s ease;
+    }
+    .nav-links.open { max-height: 400px; }
+    .nav-links a { display: block; padding: 14px 16px; border-top: 1px solid var(--line); }
+    .hero { padding: 72px 0 56px; }
+    section { padding: 64px 0; }
+    .job { grid-template-columns: 1fr; gap: 10px; }
+    .projects, .wins { grid-template-columns: 1fr; }
+    .stats { margin-top: 48px; }
+    .stat { padding: 18px; }
+    .facts li { flex-direction: column; gap: 2px; }
+    .facts li span:last-child { text-align: left; }
+  }
+</style>
+</head>
+<body class="no-js">
+<div class="grid-bg" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="logo"><span class="logo-mark">AK</span>Aman Kumar</a>
+    <nav>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">about</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#skills">skills</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="themeBtn" aria-label="Toggle light and dark theme">◐</button>
+      <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <div class="wrap hero">
+    <span class="tag reveal"><span class="dot"></span>Founding Product Engineer @ Kay.ai · Bengaluru</span>
+    <h1 class="reveal">Hi, I'm Aman.<br>I turn fuzzy ideas into <span class="hl">shipped products.</span></h1>
+    <p class="lead reveal">
+      I've spent 5+ years building B2B SaaS and AI-powered products, from React front ends to backend infrastructure to applied LLMs. Right now I'm <span class="typed" id="typed">building an AI Copilot for insurance brokers</span><span class="caret" aria-hidden="true"></span>
+    </p>
+    <div class="cta reveal">
+      <a class="btn btn-primary" href="#contact">Let's talk →</a>
+      <a class="btn btn-ghost" href="#experience">See my work</a>
+    </div>
+
+    <div class="stats reveal">
+      <div class="stat"><b>5+ yrs</b><span>building products</span></div>
+      <div class="stat"><b>13M+</b><span>users served</span></div>
+      <div class="stat"><b>&lt;20ms</b><span>proxy latency</span></div>
+      <div class="stat"><b>400K+</b><span>blog readers</span></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">01</span><h2>About me</h2><span class="rule"></span></div>
+      <div class="about">
+        <div class="reveal">
+          <p>I'm a <strong>founding product engineer</strong> who loves the messy early stage of a product, when the idea is still ambiguous and someone needs to figure out how to actually build it. I've spent the last 5+ years doing exactly that across B2B SaaS and AI-powered products.</p>
+          <p>These days I'm leading product engineering at <strong>Kay.ai</strong>, where I own the frontend architecture and UX for an AI Copilot that automates insurance workflows for brokers. Before that, I co-founded a couple of startups, built an LLMOps platform, and scaled systems to <strong>13M+ users</strong>.</p>
+          <p>I studied Mechanical Engineering at IIT Jodhpur with a minor in Entrepreneurship, and I've also written 50+ technical blogs on Medium that have reached more than 400K readers. I'm happiest working across the whole stack, from React and TypeScript to Rails, Go, and applied LLMs.</p>
+        </div>
+        <aside class="avatar-card reveal" aria-label="Quick facts">
+          <div class="avatar" aria-hidden="true">AK</div>
+          <ul class="facts">
+            <li><span>based in</span><span>Bengaluru, India</span></li>
+            <li><span>currently</span><span>Kay.ai</span></li>
+            <li><span>focus</span><span>React · Backend · LLMs</span></li>
+            <li><span>studied</span><span>IIT Jodhpur</span></li>
+            <li><span>writes on</span><span>Medium</span></li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">02</span><h2>Experience</h2><span class="rule"></span></div>
+      <div class="timeline">
+
+        <article class="job reveal">
+          <div class="job-meta"><span class="when">Mar 2024 — Present</span>Bengaluru</div>
+          <div>
+            <h3><span class="co">Kay.ai</span></h3>
+            <div class="role">Founding Product Engineer</div>
+            <p>I lead the frontend architecture and UX for an AI Copilot that automates insurance workflows for brokers. I own product delivery end to end, taking features all the way from design to production.</p>
+            <p>I also spend time experimenting with emerging AI models, techniques, and UX paradigms to keep making the product more usable and the system design sharper.</p>
+            <div class="chips"><span class="chip">React.js</span><span class="chip">TypeScript</span><span class="chip">shadcn/ui</span><span class="chip">TailwindCSS</span><span class="chip">AWS</span></div>
+          </div>
+        </article>
+
+        <article class="job reveal">
+          <div class="job-meta"><span class="when">Feb — Nov 2023</span></div>
+          <div>
+            <h3><span class="co">Dreamboat AI</span></h3>
+            <div class="role">Co-Founder / CTO</div>
+            <p>I led the team designing and building an <strong>LLMOps platform</strong> that helps developers monitor, manage, and debug their LLM apps, working along Agile principles.</p>
+            <p>Along the way I designed a high-performance Cloudflare Workers proxy that hit <strong>sub-20ms latency</strong>, and we launched several LLM-powered apps, including Divedash and Almada.</p>
+            <div class="chips"><span class="chip">React.js</span><span class="chip">TypeScript</span><span class="chip">Rails</span><span class="chip">Node.js</span><span class="chip">AWS</span><span class="chip">Cloudflare</span><span class="chip">TimescaleDB</span><span class="chip">Redis</span><span class="chip">PostgreSQL</span></div>
+          </div>
+        </article>
+
+        <article class="job reveal">
+          <div class="job-meta"><span class="when">Aug 2021 — Nov 2022</span></div>
+          <div>
+            <h3><span class="co">Engagebud</span></h3>
+            <div class="role">Co-Founder / CTO</div>
+            <p>I built Influencerbit, an influencer marketing platform, and later Engagebud, a gamification product, both for eCommerce brands.</p>
+            <p>I scaled the backend to handle <strong>13M+ users</strong> and generate <strong>6M+ discount codes</strong>.</p>
+            <div class="chips"><span class="chip">React.js</span><span class="chip">Rails</span><span class="chip">TypeScript</span><span class="chip">PostgreSQL</span><span class="chip">JavaScript</span></div>
+          </div>
+        </article>
+
+        <article class="job reveal">
+          <div class="job-meta"><span class="when">May 2020 — Jun 2021</span></div>
+          <div>
+            <h3><span class="co">Profilebud</span></h3>
+            <div class="role">Product Engineer</div>
+            <p>As the founding frontend engineer, I led development of responsive websites, admin portals, and payment flows.</p>
+            <p>I also built a Go backend that handled <strong>20M+ user records</strong> and <strong>1K+ requests per second</strong>.</p>
+            <div class="chips"><span class="chip">React.js</span><span class="chip">Rails</span><span class="chip">Go</span><span class="chip">Gatsby</span><span class="chip">JavaScript</span></div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">03</span><h2>Things I've built</h2><span class="rule"></span></div>
+      <div class="projects">
+
+        <div class="proj reveal">
+          <div class="proj-icon">AI</div>
+          <span class="kicker">Kay.ai · 2024–now</span>
+          <h3>Insurance AI Copilot</h3>
+          <p>An AI Copilot used by insurance brokers to automate their workflows. I lead its frontend architecture and UX.</p>
+          <a class="link" href="#">[INSERT KAY.AI PROJECT LINK HERE]</a>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-icon">Ops</div>
+          <span class="kicker">Dreamboat AI · 2023</span>
+          <h3>LLMOps Platform</h3>
+          <p>A platform that helps teams monitor, manage, and debug their LLM apps, backed by a Cloudflare Workers proxy with sub-20ms latency.</p>
+          <a class="link" href="#">[INSERT LLMOPS PLATFORM LINK HERE]</a>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-icon">Dd</div>
+          <span class="kicker">Chrome extension · 2023</span>
+          <h3>Divedash</h3>
+          <p>A Chrome extension that suggests prompt templates for ChatGPT, so you can get to a good prompt faster.</p>
+          <a class="link" href="#">[INSERT DIVEDASH LINK HERE]</a>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-icon">Al</div>
+          <span class="kicker">LLM app · 2023</span>
+          <h3>Almada</h3>
+          <p>A LinkedIn icebreaker generator: drop in a profile URL and it writes a conversation opener for you.</p>
+          <a class="link" href="#">[INSERT ALMADA LINK HERE]</a>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-icon">Ib</div>
+          <span class="kicker">Engagebud · 2021–22</span>
+          <h3>Influencerbit</h3>
+          <p>An influencer marketing platform built for eCommerce brands.</p>
+          <a class="link" href="#">[INSERT INFLUENCERBIT LINK HERE]</a>
+        </div>
+
+        <div class="proj reveal">
+          <div class="proj-icon">Eb</div>
+          <span class="kicker">Engagebud · 2021–22</span>
+          <h3>Engagebud</h3>
+          <p>A gamification product for eCommerce brands, with a backend scaled to 13M+ users and 6M+ discount codes generated.</p>
+          <a class="link" href="#">[INSERT ENGAGEBUD LINK HERE]</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">04</span><h2>Achievements</h2><span class="rule"></span></div>
+      <div class="wins">
+        <div class="win reveal"><div class="big">$100K</div><p>Co-founded an early-stage SaaS startup and raised $100K in funding for it.</p></div>
+        <div class="win reveal"><div class="big">13M+</div><p>Built and scaled production systems serving 13M+ users and generating 6M+ transactions.</p></div>
+        <div class="win reveal"><div class="big">50+</div><p>Written 50+ technical blogs on Medium, read by more than 400K people in total.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">05</span><h2>Skills &amp; toolkit</h2><span class="rule"></span></div>
+      <div class="skills">
+        <div class="skill-group reveal">
+          <h4>Languages</h4>
+          <div class="chips"><span class="chip">TypeScript</span><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">Ruby</span><span class="chip">Go</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Frontend</h4>
+          <div class="chips"><span class="chip">React.js</span><span class="chip">Next.js</span><span class="chip">TailwindCSS</span><span class="chip">shadcn/ui</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Backend &amp; Data</h4>
+          <div class="chips"><span class="chip">Ruby on Rails</span><span class="chip">Node.js</span><span class="chip">PostgreSQL</span><span class="chip">Redis</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Applied AI &amp; LLMs</h4>
+          <div class="chips"><span class="chip">OpenAI</span><span class="chip">Anthropic</span><span class="chip">Gemini</span><span class="chip">Prompt design &amp; evaluation</span><span class="chip">LLMOps platforms</span><span class="chip">AI agents</span><span class="chip">AI workflow orchestration</span><span class="chip">Copilot &amp; agent UX</span></div>
+        </div>
+        <div class="skill-group reveal">
+          <h4>Infra &amp; Tools</h4>
+          <div class="chips"><span class="chip">AWS</span><span class="chip">Cloudflare Workers</span><span class="chip">Git</span><span class="chip">Linux</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="sec-num">06</span><h2>Education</h2><span class="rule"></span></div>
+      <div class="edu reveal">
+        <div class="edu-badge" aria-hidden="true">IITJ</div>
+        <div>
+          <h3>IIT Jodhpur</h3>
+          <p>I earned my BTech in Mechanical Engineering with a minor in Entrepreneurship, graduating in June 2022.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact reveal">
+        <h2>Got an idea that needs building?</h2>
+        <p>I'm always up for a conversation about products, AI, or early-stage engineering. Drop me a line and say hi.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="mailto:2000.aman.sinha@gmail.com">2000.aman.sinha@gmail.com</a>
+          <a class="btn btn-ghost" href="tel:+917667078414">+91 76670-78414</a>
+        </div>
+        <div class="socials">
+          <a href="https://amankumar.ai" target="_blank" rel="noopener">amankumar.ai</a>
+          <a href="https://github.com/onlyoneaman" target="_blank" rel="noopener">GitHub · onlyoneaman</a>
+          <a href="https://www.linkedin.com/in/onlyoneaman" target="_blank" rel="noopener">LinkedIn · onlyoneaman</a>
+          <a href="https://medium.com/@onlyoneaman" target="_blank" rel="noopener">Medium · onlyoneaman</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© <span id="year"></span> Aman Kumar · Bengaluru, India</div>
+</footer>
+
+<script>
+  document.body.classList.remove('no-js');
+
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile menu
+  var menuBtn = document.getElementById('menuBtn');
+  var navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', function () {
+    var open = navLinks.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+    menuBtn.textContent = open ? '✕' : '☰';
+  });
+  navLinks.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () {
+      navLinks.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.textContent = '☰';
+    });
+  });
+
+  // Theme toggle (remembers choice when storage is available)
+  var root = document.documentElement;
+  try {
+    var saved = localStorage.getItem('ak-theme');
+    if (saved) root.setAttribute('data-theme', saved);
+  } catch (e) {}
+  document.getElementById('themeBtn').addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('ak-theme', next); } catch (e) {}
+  });
+
+  // Rotating "currently" line
+  var phrases = [
+    'building an AI Copilot for insurance brokers',
+    'experimenting with new AI models and UX patterns',
+    'shipping React + TypeScript from design to production'
+  ];
+  var typed = document.getElementById('typed');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce) {
+    var p = 0, i = phrases[0].length, deleting = true;
+    function tick() {
+      var word = phrases[p];
+      if (deleting) {
+        i--;
+        typed.textContent = word.slice(0, i);
+        if (i <= 0) { deleting = false; p = (p + 1) % phrases.length; }
+        setTimeout(tick, 28);
+      } else {
+        word = phrases[p];
+        i++;
+        typed.textContent = word.slice(0, i);
+        if (i >= word.length) { deleting = true; setTimeout(tick, 2600); return; }
+        setTimeout(tick, 55);
+      }
+    }
+    setTimeout(tick, 3000);
+  }
+
+  // Scroll reveal
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+</script>
+</body>
+</html>
