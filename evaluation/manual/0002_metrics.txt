@@ -1,0 +1,11 @@
+PAIR: 0002
+RATER: Sharvi
+
+visual_fit (1-6): 5
+hireability (1-6): 4
+resume_fidelity (1-6): 6 
+portfolio_fidelity (1-6): 4
+natural_language (1-6): 4
+factual_accuracy (1-6): 6
+
+NOTES: The wording is very similar to resume, just pronouns. The missing content in comparison to actual portfolio is due to resume not having that information.

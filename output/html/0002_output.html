@@ -1,0 +1,908 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aakarsh Bibhaw | Full-stack developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #151933;
+    --ink-2: #1d2246;
+    --ink-3: #2a3063;
+    --paper: #eceaff;
+    --muted: #a9acd6;
+    --marigold: #f2b33d;
+    --periwinkle: #8e9bff;
+    --line: rgba(142, 155, 255, 0.22);
+    --display: "Syne", "Trebuchet MS", "Segoe UI", sans-serif;
+    --body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --wrap: 1120px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a { color: inherit; }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--marigold);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap {
+    width: min(var(--wrap), 100% - 3rem);
+    margin-inline: auto;
+  }
+
+  /* ---------- Nav ---------- */
+  header.top {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 20;
+    background: rgba(21, 25, 51, 0.82);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .mark {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 1.15rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .mark span.badge {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: var(--marigold);
+    color: var(--ink);
+    border-radius: 9px 2px 9px 2px;
+    font-size: 0.9rem;
+  }
+
+  .nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.75rem;
+  }
+
+  .nav ul a {
+    text-decoration: none;
+    font-size: 0.95rem;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+
+  .nav ul a:hover { color: var(--paper); }
+
+  .menu-btn {
+    display: none;
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--paper);
+    font: inherit;
+    font-size: 0.9rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    align-items: center;
+    gap: 2rem;
+    padding-top: 64px;
+    position: relative;
+  }
+
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(3.2rem, 9vw, 7.4rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+
+  .hero h1 .last {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--periwinkle);
+  }
+
+  .hero .lede {
+    margin-top: 1.75rem;
+    max-width: 34rem;
+    font-size: 1.2rem;
+    color: var(--muted);
+  }
+
+  .hero .lede strong { color: var(--paper); font-weight: 600; }
+
+  .cta-row {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  .btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.98rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 12px 3px 12px 3px;
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .btn.primary { background: var(--marigold); color: var(--ink); }
+  .btn.primary:hover { transform: translateY(-2px); }
+  .btn.ghost { border: 1px solid var(--line); color: var(--paper); }
+  .btn.ghost:hover { background: var(--ink-2); }
+
+  .stage {
+    position: relative;
+    aspect-ratio: 1;
+    width: 100%;
+    max-width: 520px;
+    justify-self: end;
+  }
+
+  #mesh {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+  }
+
+  .stage .hint {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.82rem;
+    color: var(--muted);
+    white-space: nowrap;
+    opacity: 0.8;
+  }
+
+  /* Page-load sequence (the one orchestrated moment) */
+  .load > * {
+    opacity: 0;
+    transform: translateY(18px);
+    animation: rise 0.9s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .load > *:nth-child(1) { animation-delay: 0.05s; }
+  .load > *:nth-child(2) { animation-delay: 0.25s; }
+  .load > *:nth-child(3) { animation-delay: 0.45s; }
+  .stage { opacity: 0; animation: fade 1.4s 0.4s forwards; }
+
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  @keyframes fade { to { opacity: 1; } }
+
+  /* ---------- Sections ---------- */
+  section.block {
+    padding: 6.5rem 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .block-head {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    position: sticky;
+    top: 96px;
+  }
+
+  h3 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 1.45rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  p.prose { max-width: 40rem; color: var(--muted); }
+  p.prose + p.prose { margin-top: 1.1rem; }
+  p.prose strong { color: var(--paper); font-weight: 600; }
+
+  /* About */
+  .about-big {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.35rem, 2.4vw, 1.8rem);
+    line-height: 1.4;
+    max-width: 44rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .facts {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .fact {
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.92rem;
+    color: var(--muted);
+  }
+
+  .fact b { color: var(--marigold); font-weight: 700; }
+
+  /* Experience timeline */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: linear-gradient(var(--marigold), var(--ink-3));
+  }
+
+  .role { position: relative; }
+  .role + .role { margin-top: 3.25rem; }
+
+  .role::before {
+    content: "";
+    position: absolute;
+    left: calc(-2rem + 1px);
+    top: 8px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ink);
+    border: 2px solid var(--marigold);
+  }
+
+  .role.now::before { background: var(--marigold); box-shadow: 0 0 0 6px rgba(242,179,61,0.18); }
+
+  .when {
+    font-size: 0.9rem;
+    color: var(--periwinkle);
+    font-weight: 600;
+  }
+
+  .org { color: var(--muted); font-weight: 500; margin: 0.15rem 0 0.8rem; }
+
+  /* Projects */
+  .projects { display: grid; gap: 1.25rem; }
+
+  .project {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem 2rem;
+    padding: 2rem 2rem 1.9rem;
+    background: var(--ink-2);
+    border-left: 4px solid var(--periwinkle);
+    border-radius: 0 18px 18px 0;
+  }
+
+  .project.lead { border-left-color: var(--marigold); padding: 2.5rem 2.25rem; }
+  .project.lead h3 { font-size: 1.9rem; }
+
+  .project .tagline { color: var(--periwinkle); font-weight: 600; font-size: 0.95rem; margin-top: 0.2rem; }
+  .project.lead .tagline { color: var(--marigold); }
+
+  .project p.prose { margin-top: 0.9rem; }
+
+  .stack {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.4rem;
+  }
+
+  .stack span {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    background: var(--ink-3);
+    color: var(--paper);
+  }
+
+  .links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    align-items: flex-end;
+    font-size: 0.85rem;
+  }
+
+  .links a {
+    color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+
+  .links a:hover { color: var(--marigold); text-decoration-color: var(--marigold); }
+
+  /* Skills */
+  .skills { display: grid; gap: 0; }
+
+  .skill-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+
+  .skill-row:first-child { padding-top: 0; }
+  .skill-row h4 { font-weight: 600; font-size: 1rem; color: var(--periwinkle); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .chips span {
+    font-size: 0.92rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .chips span:hover { border-color: var(--marigold); color: var(--marigold); }
+
+  /* Leadership */
+  .lead-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .lead-item { padding-top: 1.25rem; border-top: 3px solid var(--ink-3); }
+  .lead-item .big {
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: 2.6rem;
+    line-height: 1;
+    color: var(--marigold);
+    margin-bottom: 0.9rem;
+  }
+  .lead-item h3 { font-size: 1.15rem; }
+  .lead-item .org { margin-bottom: 0.6rem; font-size: 0.92rem; }
+  .lead-item p { color: var(--muted); font-size: 0.97rem; }
+
+  /* Education */
+  .edu { display: grid; gap: 2rem; }
+  .edu-item { display: grid; grid-template-columns: 1fr auto; gap: 0.25rem 2rem; }
+  .edu-item .when { text-align: right; }
+  .scores { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; grid-column: 1 / -1; }
+
+  /* Certifications */
+  .certs { list-style: none; display: grid; gap: 0.25rem; }
+  .certs li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1.5rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .certs li:first-child { padding-top: 0; }
+  .certs .links { flex-direction: row; }
+
+  /* Contact */
+  .contact {
+    padding: 7rem 0 4rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .contact h2 {
+    position: static;
+    font-size: clamp(2.6rem, 7vw, 5.2rem);
+    font-weight: 800;
+    max-width: 14ch;
+    line-height: 0.98;
+  }
+
+  .contact p.prose { margin-top: 1.5rem; font-size: 1.15rem; }
+
+  .contact-links {
+    margin-top: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .contact-links a {
+    display: block;
+    text-decoration: none;
+    padding: 1.2rem 1.3rem;
+    background: var(--ink-2);
+    border-radius: 14px 3px 14px 3px;
+    transition: background 0.2s;
+  }
+
+  .contact-links a:hover { background: var(--ink-3); }
+  .contact-links small { display: block; color: var(--muted); font-size: 0.82rem; }
+  .contact-links span { font-weight: 600; word-break: break-word; }
+
+  footer {
+    padding: 2rem 0 3rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding-top: 96px; padding-bottom: 3rem; }
+    .stage { justify-self: center; max-width: 360px; order: -1; }
+    .block-head { grid-template-columns: 1fr; gap: 2rem; }
+    h2 { position: static; }
+    .lead-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  @media (max-width: 720px) {
+    .menu-btn { display: block; }
+    .nav ul {
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: var(--ink);
+      border-bottom: 1px solid var(--line);
+      display: none;
+    }
+    .nav ul.open { display: flex; }
+    .nav ul a { display: block; padding: 0.9rem 1.5rem; }
+    section.block { padding: 4.5rem 0; }
+    .project, .project.lead { grid-template-columns: 1fr; padding: 1.6rem 1.4rem; }
+    .links { flex-direction: row; align-items: flex-start; flex-wrap: wrap; gap: 1rem; }
+    .skill-row { grid-template-columns: 1fr; gap: 0.6rem; }
+    .edu-item { grid-template-columns: 1fr; }
+    .edu-item .when { text-align: left; }
+    .certs li { flex-direction: column; gap: 0.4rem; }
+    .hero h1 .last { -webkit-text-stroke-width: 1.5px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .load > *, .stage { animation: none; opacity: 1; transform: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a href="#top" class="mark"><span class="badge">AB</span>Aakarsh</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="nav-list">Menu</button>
+    <ul id="nav-list">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="wrap hero">
+    <div class="load">
+      <h1>Aakarsh<span class="last">Bibhaw</span></h1>
+      <p class="lede">I'm a computer science student at <strong>IIIT Kota</strong> who builds full-stack web and mobile apps, from the database schema all the way up to the animations you see on screen.</p>
+      <div class="cta-row">
+        <a href="#projects" class="btn primary">See my projects</a>
+        <a href="#contact" class="btn ghost">Get in touch</a>
+      </div>
+    </div>
+    <div class="stage" aria-hidden="true">
+      <canvas id="mesh"></canvas>
+      <span class="hint">Drag to spin it</span>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="wrap block-head">
+      <h2>About me</h2>
+      <div>
+        <p class="about-big">I like working across the whole stack, and I like it even more when the thing I'm building actually helps someone.</p>
+        <p class="prose">I'm currently in my B.Tech in Computer Science and Engineering at the Indian Institute of Information Technology, Kota, and I'm interning as a Software Development Engineer at Snooozeit Entertainment, where I'm working on a video streaming mobile app. Before that, I spent a summer at CollegeDunia making sure published content rendered cleanly across platforms.</p>
+        <p class="prose">On the side, I've built an AI legal assistant, a browser security extension, my club's official website and an interactive 3D portfolio. Outside of code, I help run things on campus: I co-coordinate IIIT Kernel, serve on the TechKnow Council and lead UI/UX for CodeBase, where we've hosted two national-level hackathons.</p>
+        <div class="facts">
+          <span class="fact"><b>98.1</b> percentile in JEE Mains</span>
+          <span class="fact"><b>700+</b> hackathon participants hosted</span>
+          <span class="fact"><b>15+</b> teams coordinated</span>
+          <span class="fact">HackHatch <b>finalist</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="experience">
+    <div class="wrap block-head">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <article class="role now">
+          <div class="when">Jun 2026 to present</div>
+          <h3>Software Development Engineer Intern</h3>
+          <div class="org">Snooozeit Entertainment Pvt. Ltd.</div>
+          <p class="prose">I'm building a full-stack video streaming mobile app with React Native, a Django REST API and Redux. Behind the scenes, I've set up serverless video transcoding pipelines on AWS Lambda and wired in in-app purchase systems that work across platforms.</p>
+        </article>
+        <article class="role">
+          <div class="when">Jun 2025 to Aug 2025</div>
+          <h3>Content Developer Intern</h3>
+          <div class="org">CollegeDunia Pvt. Ltd.</div>
+          <p class="prose">I managed production-stage content in HTML and LaTeX and made sure it rendered accurately across CMS platforms. I also reviewed the content formatting workflows, which helped cut down on publishing inconsistencies and made deployments run more smoothly.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="wrap block-head">
+      <h2>Things I've built</h2>
+      <div class="projects">
+        <article class="project lead">
+          <div>
+            <h3>Nyaya Saathi</h3>
+            <div class="tagline">An AI legal assistant</div>
+            <p class="prose">I architected the core backend for this one: secure authentication, relational data models with Alembic migrations, real-time notifications and user profile services built to scale. I also handled deployment across Vercel, Render and Supabase, configuring CORS policies and stitching the APIs together.</p>
+          </div>
+          <div class="links">
+            <a href="#">[INSERT NYAYA SAATHI LIVE LINK HERE]</a>
+            <a href="#">[INSERT NYAYA SAATHI GITHUB LINK HERE]</a>
+          </div>
+          <div class="stack"><span>Next.js</span><span>TypeScript</span><span>FastAPI</span><span>Python</span><span>PostgreSQL</span><span>LangChain</span></div>
+        </article>
+
+        <article class="project">
+          <div>
+            <h3>Kernel</h3>
+            <div class="tagline">Laying foundations</div>
+            <p class="prose">This is the official website for IIIT Kernel, built with modern frontend tools and responsive design principles. I spent a good amount of time optimizing performance and asset delivery, and it earned a strong Lighthouse score across key metrics.</p>
+          </div>
+          <div class="links">
+            <a href="#">[INSERT KERNEL LIVE LINK HERE]</a>
+            <a href="#">[INSERT KERNEL GITHUB LINK HERE]</a>
+          </div>
+          <div class="stack"><span>Next.js</span><span>TypeScript</span><span>Tailwind CSS</span><span>Framer Motion</span><span>GSAP</span><span>shadcn/ui</span></div>
+        </article>
+
+        <article class="project">
+          <div>
+            <h3>TruCheck</h3>
+            <div class="tagline">Defense before damage</div>
+            <p class="prose">TruCheck is a browser security extension that judges how trustworthy a website is using real-time security intelligence. It taps into Google Safe Browsing and HaveIBeenPwned to flag malicious domains and compromised credentials before they can cause trouble.</p>
+          </div>
+          <div class="links">
+            <a href="#">[INSERT TRUCHECK GITHUB LINK HERE]</a>
+          </div>
+          <div class="stack"><span>Python</span><span>JavaScript</span><span>HaveIBeenPwned API</span><span>WHOIS API</span><span>Google OAuth</span></div>
+        </article>
+
+        <article class="project">
+          <div>
+            <h3>DevHQ</h3>
+            <div class="tagline">My personal portfolio</div>
+            <p class="prose">A portfolio where my projects come to life through interactive Three.js and GSAP animations. I integrated the Resend API for messages and tuned performance so it feels smooth on every device.</p>
+          </div>
+          <div class="links">
+            <a href="#">[INSERT DEVHQ LIVE LINK HERE]</a>
+            <a href="#">[INSERT DEVHQ GITHUB LINK HERE]</a>
+          </div>
+          <div class="stack"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Three.js</span><span>GSAP</span><span>Node.js</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="skills">
+    <div class="wrap block-head">
+      <h2>What I work with</h2>
+      <div class="skills">
+        <div class="skill-row">
+          <h4>Languages</h4>
+          <div class="chips"><span>C++</span><span>Python</span><span>JavaScript</span><span>TypeScript</span><span>Java</span><span>SQL</span></div>
+        </div>
+        <div class="skill-row">
+          <h4>Frontend</h4>
+          <div class="chips"><span>React.js</span><span>Next.js</span><span>Three.js</span><span>Tailwind CSS</span><span>GSAP</span></div>
+        </div>
+        <div class="skill-row">
+          <h4>Backend and databases</h4>
+          <div class="chips"><span>Node.js</span><span>Express.js</span><span>FastAPI</span><span>MongoDB</span><span>PostgreSQL</span><span>Supabase</span><span>SQLite</span><span>MySQL</span></div>
+        </div>
+        <div class="skill-row">
+          <h4>AI and data</h4>
+          <div class="chips"><span>Claude API</span><span>Pydantic</span><span>NumPy</span><span>Pandas</span><span>Matplotlib</span><span>Tableau</span><span>Prompt Engineering</span></div>
+        </div>
+        <div class="skill-row">
+          <h4>Tools</h4>
+          <div class="chips"><span>Git</span><span>GitHub</span><span>GitHub Actions</span><span>Vercel</span><span>Render</span><span>Postman</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="leadership">
+    <div class="wrap block-head">
+      <h2>On campus</h2>
+      <div class="lead-grid">
+        <div class="lead-item">
+          <div class="big">700+</div>
+          <h3>UI/UX Lead</h3>
+          <div class="org">CodeBase, IIIT Kota, since Nov 2024</div>
+          <p>I've helped organize two national-level hackathons that brought in more than 700 participants combined, leading the tech side and the event branding.</p>
+        </div>
+        <div class="lead-item">
+          <div class="big">15+</div>
+          <h3>General Secretary Sr. Executive</h3>
+          <div class="org">TechKnow Council, IIIT Kota, since Sept 2024</div>
+          <p>I've coordinated over 15 teams and managed documentation for more than 10 events, keeping planning on track and making sure everything ran smoothly.</p>
+        </div>
+        <div class="lead-item">
+          <div class="big">AB</div>
+          <h3>Co-Coordinator</h3>
+          <div class="org">IIIT Kernel, IIIT Kota, since Sept 2024</div>
+          <p>I help direct the club's operations, mentor team members and push technical initiatives forward with some careful planning.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="education">
+    <div class="wrap block-head">
+      <h2>Education</h2>
+      <div class="edu">
+        <div class="edu-item">
+          <h3>Indian Institute of Information Technology, Kota</h3>
+          <div class="when">2024 to 2028</div>
+          <div class="org">B.Tech in Computer Science and Engineering</div>
+          <div class="scores"><span class="fact">JEE Mains <b>98.1</b> percentile</span></div>
+        </div>
+        <div class="edu-item">
+          <h3>Secondary and Senior Secondary Education, CBSE</h3>
+          <div class="when">2021 to 2024</div>
+          <div class="scores">
+            <span class="fact">Class 10 <b>97%</b></span>
+            <span class="fact">Class 12 <b>91%</b></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="certifications">
+    <div class="wrap block-head">
+      <h2>Certifications and wins</h2>
+      <ul class="certs">
+        <li>
+          <span>I was a finalist at HackHatch, the startup hackathon by E-Cell, IIIT Delhi.</span>
+          <span class="links"><a href="#">[INSERT HACKHATCH LINK HERE]</a></span>
+        </li>
+        <li>
+          <span>I completed Anthropic's AI Fluency certifications.</span>
+          <span class="links"><a href="#">[INSERT ANTHROPIC CERTIFICATION LINK HERE]</a></span>
+        </li>
+        <li>
+          <span>I completed the Deloitte Australia Data Analytics Job Simulation.</span>
+          <span class="links"><a href="#">[INSERT DELOITTE CERTIFICATE LINK HERE]</a></span>
+        </li>
+        <li>
+          <span>I earned a 5-star gold badge in SQL on HackerRank and completed their SQL certification.</span>
+          <span class="links"><a href="#">[INSERT HACKERRANK LINK HERE]</a></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <h2>Let's build something together.</h2>
+      <p class="prose">Whether you have an internship, a project idea or just want to talk about web dev, I'd love to hear from you. Email is the quickest way to reach me.</p>
+      <div class="contact-links">
+        <a href="mailto:cse.arsh@gmail.com"><small>Email</small><span>cse.arsh@gmail.com</span></a>
+        <a href="tel:+918210086136"><small>Phone</small><span>+91 8210086136</span></a>
+        <a href="#"><small>LinkedIn</small><span>[INSERT LINKEDIN LINK HERE]</span></a>
+        <a href="#"><small>GitHub</small><span>[INSERT GITHUB LINK HERE]</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Designed and built for Aakarsh Bibhaw.</div>
+</footer>
+
+<script>
+  // Mobile menu
+  const btn = document.querySelector('.menu-btn');
+  const list = document.getElementById('nav-list');
+  btn.addEventListener('click', () => {
+    const open = list.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    btn.textContent = open ? 'Close' : 'Menu';
+  });
+  list.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    list.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = 'Menu';
+  }));
+
+  // Wireframe icosahedron, drawn on plain canvas (no libraries)
+  (function () {
+    const canvas = document.getElementById('mesh');
+    const ctx = canvas.getContext('2d');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const t = (1 + Math.sqrt(5)) / 2;
+    const raw = [
+      [-1, t, 0], [1, t, 0], [-1, -t, 0], [1, -t, 0],
+      [0, -1, t], [0, 1, t], [0, -1, -t], [0, 1, -t],
+      [t, 0, -1], [t, 0, 1], [-t, 0, -1], [-t, 0, 1]
+    ];
+    const len = Math.hypot(1, t);
+    const verts = raw.map(v => v.map(c => c / len));
+
+    // Edges: pairs at the minimum distance
+    const edges = [];
+    for (let i = 0; i < verts.length; i++) {
+      for (let j = i + 1; j < verts.length; j++) {
+        const d = Math.hypot(verts[i][0] - verts[j][0], verts[i][1] - verts[j][1], verts[i][2] - verts[j][2]);
+        if (d < 1.1) edges.push([i, j]);
+      }
+    }
+    // Midpoints pushed outward for a second, finer layer
+    const mids = edges.map(([a, b]) => {
+      const m = [0, 1, 2].map(k => (verts[a][k] + verts[b][k]) / 2);
+      const l = Math.hypot(...m);
+      return m.map(c => (c / l) * 1.22);
+    });
+
+    let size = 0, dpr = 1;
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const r = canvas.getBoundingClientRect();
+      size = r.width;
+      canvas.width = r.width * dpr;
+      canvas.height = r.height * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let rx = 0.4, ry = 0.2, vx = 0.0025, vy = 0.004;
+    let dragging = false, lx = 0, ly = 0;
+
+    function pointer(e) { return e.touches ? e.touches[0] : e; }
+    canvas.addEventListener('pointerdown', e => {
+      dragging = true; lx = e.clientX; ly = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+      canvas.style.cursor = 'grabbing';
+    });
+    canvas.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const dx = e.clientX - lx, dy = e.clientY - ly;
+      vy = dx * 0.0008; vx = dy * 0.0008;
+      ry += dx * 0.01; rx += dy * 0.01;
+      lx = e.clientX; ly = e.clientY;
+      if (reduce) draw();
+    });
+    const end = () => { dragging = false; canvas.style.cursor = 'grab'; };
+    canvas.addEventListener('pointerup', end);
+    canvas.addEventListener('pointercancel', end);
+    canvas.style.touchAction = 'pan-y';
+
+    function project(v) {
+      let [x, y, z] = v;
+      let cy = Math.cos(ry), sy = Math.sin(ry);
+      [x, z] = [x * cy - z * sy, x * sy + z * cy];
+      let cx = Math.cos(rx), sx = Math.sin(rx);
+      [y, z] = [y * cx - z * sx, y * sx + z * cx];
+      const scale = size * 0.3;
+      const p = 3.2 / (3.2 + z);
+      return { x: size / 2 + x * scale * p, y: size / 2 + y * scale * p, z };
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, size, size);
+      const P = verts.map(project);
+      const M = mids.map(project);
+
+      // Outer spokes to midpoints
+      edges.forEach(([a, b], i) => {
+        const m = M[i];
+        const alpha = 0.12 + (1 - (m.z + 1.3) / 2.6) * 0.25;
+        ctx.strokeStyle = `rgba(142,155,255,${alpha})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(P[a].x, P[a].y); ctx.lineTo(m.x, m.y); ctx.lineTo(P[b].x, P[b].y);
+        ctx.stroke();
+      });
+
+      // Core edges
+      edges.forEach(([a, b]) => {
+        const z = (P[a].z + P[b].z) / 2;
+        const alpha = 0.25 + (1 - (z + 1) / 2) * 0.6;
+        ctx.strokeStyle = `rgba(236,234,255,${alpha})`;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(P[a].x, P[a].y); ctx.lineTo(P[b].x, P[b].y);
+        ctx.stroke();
+      });
+
+      // Vertices
+      P.forEach(p => {
+        const r = 2.5 + (1 - (p.z + 1) / 2) * 3.5;
+        ctx.fillStyle = '#f2b33d';
+        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI * 2); ctx.fill();
+      });
+      M.forEach(p => {
+        ctx.fillStyle = 'rgba(142,155,255,0.7)';
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2); ctx.fill();
+      });
+    }
+
+    function loop() {
+      if (!dragging) {
+        rx += vx; ry += vy;
+        vx += (0.0025 - vx) * 0.02;
+        vy += (0.004 - vy) * 0.02;
+      }
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    if (reduce) draw(); else loop();
+  })();
+</script>
+</body>
+</html>
+```
