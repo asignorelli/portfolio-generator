@@ -8,4 +8,4 @@ portfolio_fidelity (1-6): 5
 natural_language (1-6): 6
 factual_accuracy (1-6): 6
 
-NOTES:Very good portfolio that covers the full resume in first-person paragraphs and closely matches the real one, missing only the Kiln project, with no made-up facts.
+NOTES: Very good portfolio that covers the full resume in first-person paragraphs and closely matches the real one, missing only the Kiln project, with no made-up facts.
